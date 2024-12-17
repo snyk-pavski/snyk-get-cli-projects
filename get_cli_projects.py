@@ -120,11 +120,14 @@ def determine_snyk_product(project_type):
     elif project_type in SNYK_CONTAINER:
         return "Snyk_Container"
     else:
-        return None  # Handle unknown project types
+        # return None 
+        return ""
 
 def write_to_file(data, filename):
-  # Sort data by snyk_product before writing
-  sorted_data = sorted(data, key=lambda project: project["snyk_product"])
+  filtered_data = [project for project in data if project["snyk_product"]] 
+  # sorted_data = sorted(data, key=lambda project: project["snyk_product"])
+  sorted_data = sorted(filtered_data, key=lambda project: project["snyk_product"])
+
   with open(filename, "w") as f:
     json.dump(sorted_data, f, indent=4)
 
